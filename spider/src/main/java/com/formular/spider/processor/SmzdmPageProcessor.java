@@ -2,7 +2,8 @@ package com.formular.spider.processor;
 
 import java.util.List;
 
-import com.formular.spider.util.DataParser;
+import com.formular.spider.parser.DataParser;
+import com.formular.spider.parser.SmzdmParser;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -16,12 +17,13 @@ public class SmzdmPageProcessor implements PageProcessor {
 	
 	@Override
 	public void process(Page page) {
-		page.addTargetRequests(page.getHtml().links().regex("(http://www.smzdm.com/fenlei/danfantaoji/\\w+/\\w+)").all());
+		page.addTargetRequests(page.getHtml().links().regex("(http://www.smzdm.com/fenlei/\\w+/\\w+)").all());
 		List<String> items = page.getHtml().xpath("h5").xpath("a").regex("/span>(.+?)</span>").all();
 /*		for(String item : items){
 			System.out.println(item);
 		}*/
-		DataParser.parseSmzdm(items);
+		DataParser parser = new SmzdmParser();
+		parser.parse(items);
 	}
 
 	@Override
