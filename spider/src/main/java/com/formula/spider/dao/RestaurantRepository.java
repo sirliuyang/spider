@@ -4,10 +4,12 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Repository;
 
 //http://blog.csdn.net/zhu_tianwei/article/details/44281019
 //http://colobu.com/2014/12/03/Spring-Data-for-Mongo-Introduction/
 
+@Repository
 public class RestaurantRepository {
 	@Autowired
 	private MongoTemplate mongoTemplate;
