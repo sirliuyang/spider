@@ -3,6 +3,7 @@
  */
 package com.formula.spider.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import us.codecraft.webmagic.Page;
@@ -14,9 +15,11 @@ import us.codecraft.webmagic.processor.PageProcessor;
  * @author Leon(Liu Yang) Ideas from Formula Innovation
  */
 public class TraverseAllCityForDianping implements PageProcessor {
-	private static List<String> cities;
+	private static List<String> cities = new ArrayList<String>();
 	private static String url = "http://www.dianping.com/citylist/";
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(1000).addHeader("Accept", "application/json, text/javascript");
+	private Site site = Site.me().setRetryTimes(3).setSleepTime(1000)
+			.setUserAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2723.3 Safari/537.36").addCookie("User", "PC-Lily")
+			.addHeader("Accept", "application/json, text/javascript");
 
 	/*
 	 * (non-Javadoc)
@@ -26,14 +29,18 @@ public class TraverseAllCityForDianping implements PageProcessor {
 	 */
 	@Override
 	public void process(Page page) {
-		//If try to get data directly, it will return 403
+		// If try to get data directly, it will return 403
 		page.addTargetRequests(page.getHtml().links().regex("(http://www.dianping.com/citylist/)").all());
 		List<String> items = page.getHtml().xpath("//div[@class='main page-cityList']").links().all();
 		for (String item : items) {
-			System.out.println(item);
+			cities.add(item);
 		}
 	}
 
+	public List<String> getCities(){
+		return cities;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -44,8 +51,8 @@ public class TraverseAllCityForDianping implements PageProcessor {
 		// TODO Auto-generated method stub
 		return site;
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		Spider.create(new TraverseAllCityForDianping()).addUrl(url).thread(5).run();
 	}
 }
