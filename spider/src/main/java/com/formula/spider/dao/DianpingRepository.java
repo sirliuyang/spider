@@ -3,50 +3,40 @@
  */
 package com.formula.spider.dao;
 
+import java.util.List;
 import java.util.Set;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.formula.spider.bean.City;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.util.JSON;
+import com.mongodb.DBCursor;
 
 /**
  * @author Leon(Liu Yang) Ideas from Formula Innovation
  */
 @Repository
-public class MongoRepository {
+public class DianpingRepository {
+
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	
-	public boolean save(JSON json) {
-		DBObject dbObject = (DBObject) json;
-		mongoTemplate.save(dbObject);
-		return false;
-	}
-	
-	public void save(String json) {
-		DBObject dbObject = (DBObject)JSON.parse(json);
-		mongoTemplate.save(dbObject);
-	}
-	
-	//public 
 
-	public void test() {
+	public void testConn() {
 		Set<String> collectionNames = mongoTemplate.getCollectionNames();
-		
 		for (String collectionName : collectionNames) {
-			DBCollection collection = mongoTemplate.getCollection(collectionName);
+			System.out.println(collectionName);
 		}
-
-		/*
-		 * //Manual MongoClient mongoClient = new MongoClient(); MongoDatabase
-		 * database = mongoClient.getDatabase("dianping");
-		 * MongoCollection<Document> collection =
-		 * database.getCollection("restaurant");
-		 */
 	}
+	
+	public void getCity(){
+		List<City> cities = null;
+		DBCollection collection = mongoTemplate.getCollection("cities");
+		DBCursor cursor = collection.find();
+	    while(cursor.hasNext()) {
+	        System.out.println(cursor.next());
+	    }
+	}
+
 }
