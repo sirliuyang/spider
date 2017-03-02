@@ -3,18 +3,22 @@
  */
 package com.formula.spider.bean;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @author Leon(Liu Yang) Ideas from Formula Innovation
  */
+
+@Document(collection = "cities")
 public class City {
 	private String name;
 	private String link;
 
-	public City(String name, String link){
+	public City(String name, String link) {
 		this.name = name;
 		this.link = link;
 	}
-	
+
 	/**
 	 * @return the name
 	 */
@@ -44,10 +48,10 @@ public class City {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	
+
 	@Override
-    public String toString() {
-        return "Name : " + this.name + ", link : " + this.link; 
-    }
-	
+	public String toString() {
+		return "Name : " + this.name + ", link : " + this.link;
+	}
+
 }

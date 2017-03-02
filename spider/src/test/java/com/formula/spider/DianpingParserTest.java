@@ -24,6 +24,5 @@ public class DianpingParserTest {
 	@Test
 	public void parseCities() {
 		input = "<a href=\"http://www.dianping.com/abagaqi\" onclick=\"pageTracker._trackPageview('dp_citylist_new_pinyin_strongcity_1_1');\"><strong>阿巴嘎旗</strong></a>";
-		System.out.println(DianpingParser.parseCities(input));
 	}
 }
